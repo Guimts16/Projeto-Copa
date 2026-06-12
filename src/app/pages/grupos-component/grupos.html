@@ -1,0 +1,48 @@
+<div class="container mt-4">
+
+    <!-- CABEÇALHO -->
+    <div class="row mb-4 align-items-end">
+        <div class="col-md-8">
+            <h2 class="fw-bold mb-0">Grupos da Copa</h2>
+            <p class="text-muted">Conheça as seleções sorteadas em cada chave oficial</p>
+        </div>
+
+        <div class="col-md-4 d-flex justify-content-end">
+            <div class="card shadow-sm px-5 py-3 text-center border-0" style="border-radius: 12px;">
+                <h2 class="fw-bold mb-0" style="color: #5100FF;">{{ grupos().length }}</h2>
+                <small class="text-muted fw-medium">Grupos Formados</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID DE GRUPOS -->
+    <div class="row g-4">
+
+        <!-- Repete um bloco para cada Grupo (col-md-3 faz ficar 4 cards por linha em telas grandes) -->
+        <div class="col-md-3 col-sm-6" *ngFor="let grupo of grupos()">
+            <div class="card h-100 border-0 shadow-sm" style="border-radius: 12px;">
+
+                <!-- Nome do Grupo -->
+                <div class="card-header border-0 pt-4 pb-2 text-center" style="background-color: transparent;">
+                    <h5 class="fw-bold mb-0" style="color: #5100FF;">{{ grupo.nome }}</h5>
+                </div>
+
+                <!-- Lista de Times -->
+                <div class="card-body px-4 pb-4">
+                    <ul class="list-group list-group-flush">
+                        <!-- Repete uma linha (<li>) para cada time dentro do array de times do grupo -->
+                        <li class="list-group-item border-0 px-0 py-2 fw-medium text-dark"
+                            *ngFor="let time of grupo.times">
+                            <!-- A bolinha cinza dá um toque visual de lista sem usar as bolinhas padrão do HTML -->
+                            <span
+                                style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #9E9E9E; margin-right: 8px;"></span>
+                            {{ time }}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
