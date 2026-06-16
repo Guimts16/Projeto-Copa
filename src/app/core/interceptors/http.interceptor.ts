@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
-import { environment } from './../../../environment';
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
@@ -24,7 +24,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     });
 
     return next.handle(modifiedRequest).pipe(
-      timeout(environment.apiTimeout),
+      timeout(environment.timeout),
       catchError((error: HttpErrorResponse) => {
         return this.handleError(error);
       }),

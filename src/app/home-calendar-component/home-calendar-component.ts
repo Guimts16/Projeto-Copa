@@ -1,12 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Match } from '../match';
-import { MatchService } from '../match-service';
+import { Jogo } from '../jogo';
+import { JogoService } from '../jogo-service';
 
 interface CalendarDay {
   date: Date | null;
   label: string;
-  matches: Match[];
+  matches: Jogo[];
 }
 
 const COUNTRIES = [
@@ -216,14 +216,14 @@ const COUNTRIES = [
 })
 export class HomeCalendarComponent implements OnInit {
   form: FormGroup;
-  matches = signal<Match[]>([]);
+  matches = signal<Jogo[]>([]);
   calendarDays = signal<CalendarDay[]>([]);
   currentMonth = signal<Date>(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
   countries = COUNTRIES;
 
   constructor(
     private formBuilder: FormBuilder,
-    private matchService: MatchService,
+    private jogoService: JogoService,
   ) {
     this.form = this.formBuilder.group({
       date: ['', Validators.required],
@@ -238,8 +238,8 @@ export class HomeCalendarComponent implements OnInit {
   }
 
   loadMatches() {
-    this.matchService.getMatches().subscribe({
-      next: (data) => {
+    this.jogoService.getJogos().subscribe({
+      next: (data: Jogo[]) => {
         this.matches.set(data);
         this.buildCalendar();
       },
@@ -260,7 +260,7 @@ export class HomeCalendarComponent implements OnInit {
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(month.getFullYear(), month.getMonth(), i);
       const dateKey = date.toISOString().split('T')[0];
-      const dayMatches = this.matches().filter((match) => match.date === dateKey);
+      const dayMatches: Jogo[] = [];
       days.push({ date, label: String(i), matches: dayMatches });
     }
 
@@ -285,35 +285,24 @@ export class HomeCalendarComponent implements OnInit {
       return;
     }
 
-    const match = this.form.value as Match;
-
-    this.matchService.saveMatch(match).subscribe({
-      next: (saved) => {
-        this.matches.update((current) => [...current, saved]);
-        this.form.reset();
-        this.buildCalendar();
-      },
-    });
+    // Jogos são apenas para leitura do endpoint da Copa
+    alert('Jogos são gerenciados pelo backend da Copa.');
   }
 
-  removeMatch(match: Match) {
-    if (!match.id) {
-      return;
-    }
-
-    this.matchService.deleteMatch(match).subscribe({
-      next: () => {
-        this.matches.update((current) => current.filter((m) => m.id !== match.id));
-        this.buildCalendar();
-      },
-    });
+  removeMatch(match: Jogo) {
+    // Jogos são apenas para leitura
+    alert('Jogos não podem ser removidos.');
   }
 
   get opponentOptions() {
-    return Array.from(new Set(this.matches().map((match) => match.opponent))).sort();
+    return ['Sem filtro'];
   }
 
   get monthName() {
     return this.currentMonth().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  }
+
+  getEstadio(jogo: Jogo): string {
+    return (jogo as any)['estádio'] || 'Estádio a confirmar';
   }
 }

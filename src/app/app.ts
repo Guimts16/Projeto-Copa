@@ -7,5 +7,5 @@ import { Component, signal } from '@angular/core';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('Times');
+  protected readonly title = signal('Copa do Mundo - Coleção de Jogadores');
 }

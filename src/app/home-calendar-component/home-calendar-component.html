@@ -37,8 +37,8 @@
         <div *ngIf="day.matches.length > 0" class="day-tooltip">
           <div class="badge bg-primary mb-2">{{ day.matches.length }} jogo(s)</div>
           <div *ngFor="let match of day.matches" class="tooltip-item">
-            <strong>{{ match.opponent }}</strong>
-            <div class="text-muted">{{ match.venue }}</div>
+            <strong>{{ match.time1 }} vs {{ match.time2 }}</strong>
+            <div class="text-muted">{{ getEstadio(match) }}</div>
           </div>
         </div>
       </div>

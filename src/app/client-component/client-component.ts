@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Client } from '../client';
-import { ProductService } from '../product-service';
+import { JogadorService } from '../product-service';
 
 @Component({
   selector: 'app-client-component',
@@ -16,7 +16,7 @@ export class ClientComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: ProductService,
+    private service: JogadorService,
   ) {
     this.formGroup = this.formBuilder.group({
       id: [''],

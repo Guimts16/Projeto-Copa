@@ -11,13 +11,15 @@ import { HttpConfigInterceptor } from './core/interceptors';
 import { FooterComponent } from './footer-component/footer-component';
 import { HomeCalendarComponent } from './home-calendar-component/home-calendar-component';
 import { HomeComponent } from './home-component/home-component';
+import { IngressosComponent } from './ingressos-component/ingressos-component';
 import { NavBarComponent } from './nav-bar-component/nav-bar-component';
-import { TeamComponent } from './product-component/product-component';
+import { JogadorComponent } from './product-component/product-component';
 
 @NgModule({
   declarations: [
     App,
-    TeamComponent,
+    JogadorComponent,
+    IngressosComponent,
     HomeComponent,
     HomeCalendarComponent,
     FooterComponent,

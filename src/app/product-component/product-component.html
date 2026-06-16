@@ -1,46 +1,45 @@
 <div class="container mt-4">
-  <div class="display-4 text-center mb-4">Cadastro de Times</div>
+  <div class="display-4 text-center mb-4">⚽ Cadastro de Jogadores</div>
 
   <div class="row gx-4">
     <div class="col-lg-7">
-      <form [formGroup]="formGroupTeam" class="card p-4 mb-4 shadow-sm">
+      <form [formGroup]="formGroupJogador" class="card p-4 mb-4 shadow-sm">
         <div class="row g-3">
           <div class="col-md-6">
-            <label for="inputName" class="form-label">Nome do time</label>
-            <input formControlName="name" type="text" class="form-control" id="inputName" />
+            <label for="inputNome" class="form-label">Nome do Jogador</label>
+            <input formControlName="nome" type="text" class="form-control" id="inputNome" />
           </div>
           <div class="col-md-6">
-            <label for="inputCountry" class="form-label">País</label>
-            <input formControlName="country" type="text" class="form-control" id="inputCountry" />
+            <label for="inputSelecao" class="form-label">Seleção</label>
+            <input formControlName="selecao" type="text" class="form-control" id="inputSelecao" />
           </div>
           <div class="col-md-6">
-            <label for="inputMatchDay" class="form-label">Próximo dia de jogo</label>
-            <input formControlName="matchDay" type="date" class="form-control" id="inputMatchDay" />
+            <label for="inputPosicao" class="form-label">Posição</label>
+            <input formControlName="posicao" type="text" class="form-control" id="inputPosicao" />
           </div>
           <div class="col-md-6">
-            <label for="inputPoints" class="form-label">Pontuação na Copa</label>
+            <label for="inputObtida" class="form-label">Obtida</label>
             <input
-              formControlName="cupPoints"
-              type="number"
-              min="0"
-              class="form-control"
-              id="inputPoints"
+              formControlName="obtida"
+              type="checkbox"
+              class="form-check-input"
+              id="inputObtida"
             />
           </div>
         </div>
 
         <div class="mt-4 d-flex flex-wrap gap-2">
           <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="save()">
-            Salvar time
+            Salvar Jogador
           </button>
           <button *ngIf="isEditing" type="button" class="btn btn-success" (click)="update()">
-            Atualizar time
+            Atualizar Jogador
           </button>
           <button
             *ngIf="isEditing"
             type="button"
             class="btn btn-outline-secondary"
-            (click)="formGroupTeam.reset(); isEditing = false"
+            (click)="formGroupJogador.reset(); isEditing = false"
           >
             Cancelar
           </button>
@@ -50,14 +49,16 @@
 
     <div class="col-lg-5">
       <div class="card calendar-panel shadow-sm mb-4 p-3">
-        <h5 class="mb-3">Próximos jogos</h5>
-        <div *ngIf="teams().length === 0" class="text-muted">Nenhum time cadastrado ainda.</div>
-        <ng-container *ngIf="teams().length > 0">
-          <div *ngFor="let item of upcomingMatches" class="mb-3">
-            <div class="match-day">{{ item.matchDay | date: 'dd/MM/yyyy' }}</div>
+        <h5 class="mb-3">Jogadores por Seleção</h5>
+        <div *ngIf="jogadores().length === 0" class="text-muted">
+          Nenhum jogador cadastrado ainda.
+        </div>
+        <ng-container *ngIf="jogadores().length > 0">
+          <div *ngFor="let item of jogadoresPorSelecao()" class="mb-3">
+            <div class="match-day">{{ item.selecao }}</div>
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let team of item.teams" class="match-item">
-                <strong>{{ team.name }}</strong> - {{ team.country }}
+              <li *ngFor="let jogador of item.jogadores" class="match-item">
+                <strong>{{ jogador.nome }}</strong> - {{ jogador.posicao }}
               </li>
             </ul>
           </div>
@@ -67,47 +68,50 @@
       <div class="card stats-panel shadow-sm p-3">
         <h5 class="mb-3">Resumo rápido</h5>
         <div class="d-flex justify-content-between mb-2">
-          <span>Times cadastrados</span>
-          <strong>{{ teams().length }}</strong>
+          <span>Total de Jogadores</span>
+          <strong>{{ totalJogadores() }}</strong>
         </div>
         <div class="d-flex justify-content-between mb-2">
-          <span>Maior pontuação</span>
-          <strong>{{ highestPoints() }}</strong>
+          <span>Jogadores Obtidos</span>
+          <strong>{{ jogadoresObtidos() }}</strong>
         </div>
         <div class="d-flex justify-content-between">
-          <span>Próximo jogo</span>
-          <strong>{{ nextMatch() || '—' }}</strong>
+          <span>Faltam Coletar</span>
+          <strong>{{ totalJogadores() - jogadoresObtidos() }}</strong>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="mb-3"><strong>Total de times:</strong> {{ teams().length }}</div>
+  <div class="mb-3"><strong>Total de jogadores:</strong> {{ jogadores().length }}</div>
 
   <div class="table-responsive mb-5">
     <table class="table table-hover align-middle">
       <thead class="table-light">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Time</th>
-          <th scope="col">País</th>
-          <th scope="col">Jogo</th>
-          <th scope="col">Pontos</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Seleção</th>
+          <th scope="col">Posição</th>
+          <th scope="col">Obtida</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let team of teams()">
-          <th scope="row">{{ team.id }}</th>
-          <td>{{ team.name }}</td>
-          <td>{{ team.country }}</td>
-          <td>{{ team.matchDay | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ team.cupPoints }}</td>
+        <tr *ngFor="let jogador of jogadores()">
+          <th scope="row">{{ jogador.id }}</th>
+          <td>{{ jogador.nome }}</td>
+          <td>{{ jogador.selecao }}</td>
+          <td>{{ jogador.posicao }}</td>
           <td>
-            <button class="btn btn-sm btn-secondary me-2" (click)="onClickUpdate(team)">
+            <span *ngIf="jogador.obtida" class="badge bg-success">Sim</span>
+            <span *ngIf="!jogador.obtida" class="badge bg-danger">Não</span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-secondary me-2" (click)="onClickUpdate(jogador)">
               Editar
             </button>
-            <button class="btn btn-sm btn-danger" (click)="delete(team)">Remover</button>
+            <button class="btn btn-sm btn-danger" (click)="delete(jogador)">Remover</button>
           </td>
         </tr>
       </tbody>

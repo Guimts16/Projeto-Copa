@@ -1,34 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../environment';
-import { Team } from './product';
+import { environment } from '../environments/environment';
+import { Jogador } from './jogador';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
-  private apiUrl = `${environment.apiBaseUrl}${environment.endpoints.teams}`;
+export class JogadorService {
+  private apiUrl = `${environment.apiBaseUrl}${environment.endpoints.jogadores}`;
 
   constructor(private http: HttpClient) {}
 
-  getAllTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(this.apiUrl);
+  getAllJogadores(): Observable<Jogador[]> {
+    return this.http.get<Jogador[]>(this.apiUrl);
   }
 
-  getTeamById(id: number): Observable<Team> {
-    return this.http.get<Team>(`${this.apiUrl}/${id}`);
+  getJogadorById(id: number): Observable<Jogador> {
+    return this.http.get<Jogador>(`${this.apiUrl}/${id}`);
   }
 
-  saveTeam(team: Team): Observable<Team> {
-    return this.http.post<Team>(this.apiUrl, team);
+  saveJogador(jogador: Jogador): Observable<Jogador> {
+    return this.http.post<Jogador>(this.apiUrl, jogador);
   }
 
-  deleteTeam(id: number): Observable<void> {
+  deleteJogador(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  updateTeam(id: number, team: Team): Observable<Team> {
-    return this.http.put<Team>(`${this.apiUrl}/${id}`, team);
+  updateJogador(id: number, jogador: Jogador): Observable<Jogador> {
+    return this.http.put<Jogador>(`${this.apiUrl}/${id}`, jogador);
   }
 }

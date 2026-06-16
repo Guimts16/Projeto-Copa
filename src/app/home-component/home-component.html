@@ -30,14 +30,14 @@
     <div class="col-md-4">
       <div class="card highlight-card shadow-sm mb-4 p-4">
         <h5 class="card-title">Principais jogos</h5>
-        <div *ngIf="featuredMatches().length === 0" class="text-muted">Carregando partidas...</div>
-        <div *ngFor="let match of featuredMatches()" class="match-card mb-3 p-3 border rounded">
+        <div *ngIf="featuredJogos().length === 0" class="text-muted">Carregando partidas...</div>
+        <div *ngFor="let jogo of featuredJogos()" class="match-card mb-3 p-3 border rounded">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <strong>{{ match.date | date: 'dd/MM/yyyy' }}</strong>
-            <span class="badge bg-primary">{{ match.venue }}</span>
+            <strong>{{ jogo.data }}</strong>
+            <span class="badge bg-primary">{{ getEstadio(jogo) }}</span>
           </div>
-          <div class="fw-semibold">{{ match.opponent }}</div>
-          <div class="text-muted">Local do confronto e adversário principal</div>
+          <div class="fw-semibold">{{ jogo.time1 }} vs {{ jogo.time2 }}</div>
+          <div class="text-muted">{{ jogo.cidade }}</div>
         </div>
       </div>
     </div>

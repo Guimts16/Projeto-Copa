@@ -1,7 +1,9 @@
+/* Ingressos Component Styles */
+
 .display-4 {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #1f2937;
   margin-bottom: 2rem;
   font-size: 2.5rem;
 }
@@ -18,6 +20,41 @@
   color: #374151;
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
+}
+
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.form-control:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  color: #1f2937;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .table-responsive {
@@ -97,23 +134,38 @@
 .stats-panel {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
   border-radius: 0.75rem;
-  border-left: 4px solid #10b981;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+  border-left: 4px solid #f59e0b;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
 }
 
 .stats-panel h5 {
   font-weight: 700;
   color: #1f2937;
-  color: #f1f5f9;
 }
 
-.stats-panel .d-flex {
-  padding: 0.75rem 0;
-  font-weight: 500;
-  color: #cbd5e1;
+.stats-panel div {
+  color: #374151;
 }
 
 .stats-panel strong {
-  color: #06b6d4;
+  color: #1f2937;
   font-weight: 700;
+}
+
+.text-muted {
+  color: #6b7280 !important;
+}
+
+.badge {
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.badge.bg-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.badge.bg-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
 }

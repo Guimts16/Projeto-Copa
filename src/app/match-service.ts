@@ -1,34 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../environment';
-import { Match } from './match';
+import { environment } from '../environments/environment';
+import { Ingressos } from './ingressos';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MatchService {
-  private apiUrl = `${environment.apiBaseUrl}${environment.endpoints.matches}`;
+export class IngressosService {
+  private apiUrl = `${environment.apiBaseUrl}${environment.endpoints.ingressos}`;
 
   constructor(private http: HttpClient) {}
 
-  getMatches(): Observable<Match[]> {
-    return this.http.get<Match[]>(this.apiUrl);
+  getIngressos(): Observable<Ingressos[]> {
+    return this.http.get<Ingressos[]>(this.apiUrl);
   }
 
-  getMatchById(id: number): Observable<Match> {
-    return this.http.get<Match>(`${this.apiUrl}/${id}`);
+  getIngressosById(id: number): Observable<Ingressos> {
+    return this.http.get<Ingressos>(`${this.apiUrl}/${id}`);
   }
 
-  saveMatch(match: Match): Observable<Match> {
-    return this.http.post<Match>(this.apiUrl, match);
+  saveIngressos(ingressos: Ingressos): Observable<Ingressos> {
+    return this.http.post<Ingressos>(this.apiUrl, ingressos);
   }
 
-  deleteMatch(id: number): Observable<void> {
+  deleteIngressos(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  updateMatch(id: number, match: Match): Observable<Match> {
-    return this.http.put<Match>(`${this.apiUrl}/${id}`, match);
+  updateIngressos(id: number, ingressos: Ingressos): Observable<Ingressos> {
+    return this.http.put<Ingressos>(`${this.apiUrl}/${id}`, ingressos);
   }
 }

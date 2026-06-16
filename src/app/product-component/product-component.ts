@@ -1,119 +1,112 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Team } from '../product';
-import { ProductService } from '../product-service';
+import { Jogador } from '../jogador';
+import { JogadorService } from '../product-service';
 
 @Component({
-  selector: 'app-team',
+  selector: 'app-jogador',
   standalone: false,
   templateUrl: './product-component.html',
   styleUrl: './product-component.css',
 })
-export class TeamComponent implements OnInit {
-  formGroupTeam: FormGroup;
+export class JogadorComponent implements OnInit {
+  formGroupJogador: FormGroup;
 
-  teams = signal<Team[]>([]);
+  jogadores = signal<Jogador[]>([]);
   isEditing: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: ProductService,
+    private service: JogadorService,
   ) {
-    this.formGroupTeam = this.formBuilder.group({
+    this.formGroupJogador = this.formBuilder.group({
       id: [''],
-      name: [''],
-      country: [''],
-      matchDay: [''],
-      cupPoints: [0],
+      nome: [''],
+      selecao: [''],
+      posicao: [''],
+      obtida: [false],
     });
   }
 
   ngOnInit(): void {
-    this.service.getAllTeams().subscribe({
-      next: (json) => this.teams.set(json),
+    this.service.getAllJogadores().subscribe({
+      next: (json) => this.jogadores.set(json),
     });
   }
 
   save() {
-    const team = this.formGroupTeam.value as Team;
+    const jogador = this.formGroupJogador.value as Jogador;
 
-    if (team.name === '' || team.country === '' || team.matchDay === '' || team.cupPoints == null) {
+    if (jogador.nome === '' || jogador.selecao === '' || jogador.posicao === '') {
       alert('Preencha todos os campos antes de salvar.');
       return;
     }
 
-    this.service.saveTeam(team).subscribe({
+    this.service.saveJogador(jogador).subscribe({
       next: (json) => {
-        this.teams.update((teams) => [...teams, json]);
-        this.formGroupTeam.reset();
+        this.jogadores.update((jogadores) => [...jogadores, json]);
+        this.formGroupJogador.reset();
       },
       error: (err) => {
-        alert('Erro ao salvar o time: ' + err.message);
+        alert('Erro ao salvar o jogador: ' + err.message);
       },
     });
   }
 
-  delete(team: Team) {
-    this.service.deleteTeam(team.id!).subscribe({
+  delete(jogador: Jogador) {
+    this.service.deleteJogador(jogador.id).subscribe({
       next: () => {
-        this.teams.update((teams) => teams.filter((t) => t.id !== team.id));
+        this.jogadores.update((jogadores) => jogadores.filter((j) => j.id !== jogador.id));
       },
       error: (err) => {
-        alert('Erro ao deletar o time: ' + err.message);
+        alert('Erro ao deletar o jogador: ' + err.message);
       },
     });
   }
 
-  onClickUpdate(team: Team) {
-    this.formGroupTeam.setValue(team);
+  onClickUpdate(jogador: Jogador) {
+    this.formGroupJogador.setValue(jogador);
     this.isEditing = true;
   }
 
   update() {
-    const team = this.formGroupTeam.value as Team;
-    const teamId = team.id;
+    const jogador = this.formGroupJogador.value as Jogador;
+    const jogadorId = jogador.id;
 
-    if (!teamId) {
-      alert('ID do time não encontrado');
+    if (!jogadorId) {
+      alert('ID do jogador não encontrado');
       return;
     }
 
-    this.service.updateTeam(teamId, team).subscribe({
+    this.service.updateJogador(jogadorId, jogador).subscribe({
       next: (json) => {
-        this.teams.update((teams) => teams.map((t) => (t.id === json.id ? json : t)));
+        this.jogadores.update((jogadores) => jogadores.map((j) => (j.id === json.id ? json : j)));
         this.isEditing = false;
-        this.formGroupTeam.reset();
+        this.formGroupJogador.reset();
       },
       error: (err) => {
-        alert('Erro ao atualizar o time: ' + err.message);
+        alert('Erro ao atualizar o jogador: ' + err.message);
       },
     });
   }
 
-  get upcomingMatches() {
-    const grouped = new Map<string, Team[]>();
-    for (const team of this.teams()) {
-      if (!grouped.has(team.matchDay)) {
-        grouped.set(team.matchDay, []);
+  jogadoresPorSelecao() {
+    const grouped = new Map<string, Jogador[]>();
+    for (const jogador of this.jogadores()) {
+      if (!grouped.has(jogador.selecao)) {
+        grouped.set(jogador.selecao, []);
       }
-      grouped.get(team.matchDay)!.push(team);
+      grouped.get(jogador.selecao)!.push(jogador);
     }
 
-    return Array.from(grouped.entries())
-      .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime())
-      .map(([matchDay, teams]) => ({ matchDay, teams }));
+    return Array.from(grouped.entries()).map(([selecao, jogadores]) => ({ selecao, jogadores }));
   }
 
-  highestPoints() {
-    const points = this.teams().map((team) => team.cupPoints ?? 0);
-    return points.length ? Math.max(...points) : 0;
+  totalJogadores() {
+    return this.jogadores().length;
   }
 
-  nextMatch() {
-    if (this.upcomingMatches.length === 0) {
-      return null;
-    }
-    const next = this.upcomingMatches[0].matchDay;
-    return new Date(next).toLocaleDateString('pt-BR');
+  jogadoresObtidos() {
+    return this.jogadores().filter((j) => j.obtida).length;
   }
 }

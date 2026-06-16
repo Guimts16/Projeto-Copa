@@ -1,0 +1,131 @@
+<div class="container mt-4">
+  <div class="display-4 text-center mb-4">🎫 Gerenciamento de Ingressos</div>
+
+  <div class="row gx-4">
+    <div class="col-lg-7">
+      <form [formGroup]="formGroupIngressos" class="card p-4 mb-4 shadow-sm">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="inputCpf" class="form-label">CPF</label>
+            <input formControlName="cpf" type="text" class="form-control" id="inputCpf" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputTitular" class="form-label">Titular</label>
+            <input formControlName="titular" type="text" class="form-control" id="inputTitular" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputJogo" class="form-label">Jogo</label>
+            <input formControlName="jogo" type="text" class="form-control" id="inputJogo" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputSetor" class="form-label">Setor</label>
+            <input formControlName="setor" type="text" class="form-control" id="inputSetor" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputAssento" class="form-label">Assento</label>
+            <input formControlName="assento" type="text" class="form-control" id="inputAssento" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputPreco" class="form-label">Preço</label>
+            <input
+              formControlName="preco"
+              type="number"
+              step="0.01"
+              min="0"
+              class="form-control"
+              id="inputPreco"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex flex-wrap gap-2">
+          <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="save()">
+            Salvar Ingresso
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-success" (click)="update()">
+            Atualizar Ingresso
+          </button>
+          <button
+            *ngIf="isEditing"
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="formGroupIngressos.reset(); isEditing = false"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card calendar-panel shadow-sm mb-4 p-3">
+        <h5 class="mb-3">Ingressos por Jogo</h5>
+        <div *ngIf="ingressos().length === 0" class="text-muted">
+          Nenhum ingresso cadastrado ainda.
+        </div>
+        <ng-container *ngIf="ingressos().length > 0">
+          <div *ngFor="let item of ingressosPorJogo()" class="mb-3">
+            <div class="match-day">{{ item.jogo }}</div>
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let ingresso of item.ingressos" class="match-item">
+                <strong>{{ ingresso.titular }}</strong> - R$ {{ ingresso.preco }}
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="card stats-panel shadow-sm p-3">
+        <h5 class="mb-3">Resumo Financeiro</h5>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Total de Ingressos</span>
+          <strong>{{ totalIngressos() }}</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Total Arrecadado</span>
+          <strong>R$ {{ totalArrecadado().toFixed(2) }}</strong>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Preço Médio</span>
+          <strong>R$ {{ precoMedio() }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3"><strong>Total de ingressos:</strong> {{ ingressos().length }}</div>
+
+  <div class="table-responsive mb-5">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titular</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Jogo</th>
+          <th scope="col">Setor</th>
+          <th scope="col">Assento</th>
+          <th scope="col">Preço</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingresso of ingressos()">
+          <th scope="row">{{ ingresso.id }}</th>
+          <td>{{ ingresso.titular }}</td>
+          <td>{{ ingresso.cpf }}</td>
+          <td>{{ ingresso.jogo }}</td>
+          <td>{{ ingresso.setor }}</td>
+          <td>{{ ingresso.assento }}</td>
+          <td>R$ {{ ingresso.preco }}</td>
+          <td>
+            <button class="btn btn-sm btn-secondary me-2" (click)="onClickUpdate(ingresso)">
+              Editar
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="delete(ingresso)">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
