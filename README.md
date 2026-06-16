@@ -1,16 +1,52 @@
-# Cadprod
+# Time Manager - Angular + Java Backend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+⚽ Aplicação moderna para gerenciamento de times e partidas de futebol, construída com **Angular 21** e **Design Escuro Elegante**.
 
-## Development server
+## 🎯 Características
 
-To start a local development server, run:
+- ✅ Interface dark mode sofisticada com tema Teal/Cyan
+- ✅ Gerenciamento de times (CRUD completo)
+- ✅ Gerenciamento de partidas
+- ✅ Calendário integrado
+- ✅ Totalmente preparada para backend Java
+- ✅ Interceptor HTTP automático
+- ✅ Tratamento de erros robusto
+- ✅ Tipagem TypeScript completa
+
+## 🚀 Quick Start
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm 9+
+- Backend Java rodando em `http://localhost:8080/api` (consulte [BACKEND_SETUP.md](./BACKEND_SETUP.md))
+
+### Instalação
 
 ```bash
-ng serve
+# Clonar o repositório
+git clone [seu-repo]
+cd Angular-Products
+
+# Instalar dependências
+npm install
+
+# Iniciar servidor de desenvolvimento
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abra seu navegador em `http://localhost:4200/`. A aplicação recarrega automaticamente ao modificar os arquivos.
+
+### Configuração do Backend
+
+**IMPORTANTE**: Este projeto está preparado para funcionar com um backend Java.
+
+Consulte o guia completo em [BACKEND_SETUP.md](./BACKEND_SETUP.md) para:
+
+- Endpoints esperados
+- Modelos de dados
+- Configuração de CORS
+- Exemplos de requisição
 
 ## Code scaffolding
 

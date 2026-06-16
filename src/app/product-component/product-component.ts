@@ -42,18 +42,24 @@ export class TeamComponent implements OnInit {
       return;
     }
 
-    this.service.saveTeam(this.formGroupTeam.value).subscribe({
+    this.service.saveTeam(team).subscribe({
       next: (json) => {
         this.teams.update((teams) => [...teams, json]);
         this.formGroupTeam.reset();
+      },
+      error: (err) => {
+        alert('Erro ao salvar o time: ' + err.message);
       },
     });
   }
 
   delete(team: Team) {
-    this.service.deleteTeam(team).subscribe({
+    this.service.deleteTeam(team.id!).subscribe({
       next: () => {
         this.teams.update((teams) => teams.filter((t) => t.id !== team.id));
+      },
+      error: (err) => {
+        alert('Erro ao deletar o time: ' + err.message);
       },
     });
   }
@@ -64,11 +70,22 @@ export class TeamComponent implements OnInit {
   }
 
   update() {
-    this.service.updateTeam(this.formGroupTeam.value).subscribe({
+    const team = this.formGroupTeam.value as Team;
+    const teamId = team.id;
+
+    if (!teamId) {
+      alert('ID do time não encontrado');
+      return;
+    }
+
+    this.service.updateTeam(teamId, team).subscribe({
       next: (json) => {
         this.teams.update((teams) => teams.map((t) => (t.id === json.id ? json : t)));
         this.isEditing = false;
         this.formGroupTeam.reset();
+      },
+      error: (err) => {
+        alert('Erro ao atualizar o time: ' + err.message);
       },
     });
   }
