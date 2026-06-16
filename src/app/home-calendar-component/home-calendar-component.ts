@@ -1,5 +1,4 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Jogo } from '../jogo';
 import { JogoService } from '../jogo-service';
 
@@ -9,229 +8,18 @@ interface CalendarDay {
   matches: Jogo[];
 }
 
-const COUNTRIES = [
-  'Afghanistan',
-  'Albania',
-  'Algeria',
-  'Andorra',
-  'Angola',
-  'Antigua and Barbuda',
-  'Argentina',
-  'Armenia',
-  'Australia',
-  'Austria',
-  'Azerbaijan',
-  'Bahamas',
-  'Bahrain',
-  'Bangladesh',
-  'Barbados',
-  'Belarus',
-  'Belgium',
-  'Belize',
-  'Benin',
-  'Bhutan',
-  'Bolivia',
-  'Bosnia and Herzegovina',
-  'Botswana',
-  'Brazil',
-  'Brunei',
-  'Bulgaria',
-  'Burkina Faso',
-  'Burundi',
-  'Cabo Verde',
-  'Cambodia',
-  'Cameroon',
-  'Canada',
-  'Central African Republic',
-  'Chad',
-  'Chile',
-  'China',
-  'Colombia',
-  'Comoros',
-  'Congo (Brazzaville)',
-  'Congo (Kinshasa)',
-  'Costa Rica',
-  'Croatia',
-  'Cuba',
-  'Cyprus',
-  'Czech Republic',
-  'Côte d Ivoire',
-  'Denmark',
-  'Djibouti',
-  'Dominica',
-  'Dominican Republic',
-  'Ecuador',
-  'Egypt',
-  'El Salvador',
-  'Equatorial Guinea',
-  'Eritrea',
-  'Estonia',
-  'Eswatini',
-  'Ethiopia',
-  'Fiji',
-  'Finland',
-  'France',
-  'Gabon',
-  'Gambia',
-  'Georgia',
-  'Germany',
-  'Ghana',
-  'Greece',
-  'Grenada',
-  'Guatemala',
-  'Guinea',
-  'Guinea-Bissau',
-  'Guyana',
-  'Haiti',
-  'Honduras',
-  'Hungary',
-  'Iceland',
-  'India',
-  'Indonesia',
-  'Iran',
-  'Iraq',
-  'Ireland',
-  'Israel',
-  'Italy',
-  'Jamaica',
-  'Japan',
-  'Jordan',
-  'Kazakhstan',
-  'Kenya',
-  'Kiribati',
-  'Korea North',
-  'Korea South',
-  'Kosovo',
-  'Kuwait',
-  'Kyrgyzstan',
-  'Laos',
-  'Latvia',
-  'Lebanon',
-  'Lesotho',
-  'Liberia',
-  'Libya',
-  'Liechtenstein',
-  'Lithuania',
-  'Luxembourg',
-  'Madagascar',
-  'Malawi',
-  'Malaysia',
-  'Maldives',
-  'Mali',
-  'Malta',
-  'Marshall Islands',
-  'Mauritania',
-  'Mauritius',
-  'Mexico',
-  'Micronesia',
-  'Moldova',
-  'Monaco',
-  'Mongolia',
-  'Montenegro',
-  'Morocco',
-  'Mozambique',
-  'Myanmar',
-  'Namibia',
-  'Nauru',
-  'Nepal',
-  'Netherlands',
-  'New Zealand',
-  'Nicaragua',
-  'Niger',
-  'Nigeria',
-  'North Macedonia',
-  'Norway',
-  'Oman',
-  'Pakistan',
-  'Palau',
-  'Panama',
-  'Papua New Guinea',
-  'Paraguay',
-  'Peru',
-  'Philippines',
-  'Poland',
-  'Portugal',
-  'Qatar',
-  'Romania',
-  'Russia',
-  'Rwanda',
-  'Saint Kitts and Nevis',
-  'Saint Lucia',
-  'Saint Vincent and the Grenadines',
-  'Samoa',
-  'San Marino',
-  'Sao Tome and Principe',
-  'Saudi Arabia',
-  'Senegal',
-  'Serbia',
-  'Seychelles',
-  'Sierra Leone',
-  'Singapore',
-  'Slovakia',
-  'Slovenia',
-  'Solomon Islands',
-  'Somalia',
-  'South Africa',
-  'South Sudan',
-  'Spain',
-  'Sri Lanka',
-  'Sudan',
-  'Suriname',
-  'Sweden',
-  'Switzerland',
-  'Syria',
-  'Taiwan',
-  'Tajikistan',
-  'Tanzania',
-  'Thailand',
-  'Timor-Leste',
-  'Togo',
-  'Tonga',
-  'Trinidad and Tobago',
-  'Tunisia',
-  'Turkey',
-  'Turkmenistan',
-  'Tuvalu',
-  'Uganda',
-  'Ukraine',
-  'United Arab Emirates',
-  'United Kingdom',
-  'United States',
-  'Uruguay',
-  'Uzbekistan',
-  'Vanuatu',
-  'Vatican City',
-  'Venezuela',
-  'Vietnam',
-  'Yemen',
-  'Zambia',
-  'Zimbabwe',
-];
-
 @Component({
   selector: 'app-home-calendar-component',
   standalone: false,
   templateUrl: './home-calendar-component.html',
-  styleUrl: './home-calendar-component.css',
+  styleUrls: ['./home-calendar-component.css'],
 })
 export class HomeCalendarComponent implements OnInit {
-  form: FormGroup;
   matches = signal<Jogo[]>([]);
   calendarDays = signal<CalendarDay[]>([]);
   currentMonth = signal<Date>(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
-  countries = COUNTRIES;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private jogoService: JogoService,
-  ) {
-    this.form = this.formBuilder.group({
-      date: ['', Validators.required],
-      opponent: ['', Validators.required],
-      country: ['', Validators.required],
-      venue: ['', Validators.required],
-    });
-  }
+  constructor(private jogoService: JogoService) {}
 
   ngOnInit(): void {
     this.loadMatches();
@@ -241,6 +29,10 @@ export class HomeCalendarComponent implements OnInit {
     this.jogoService.getJogos().subscribe({
       next: (data: Jogo[]) => {
         this.matches.set(data);
+        this.buildCalendar();
+      },
+      error: () => {
+        this.matches.set([]);
         this.buildCalendar();
       },
     });
@@ -259,9 +51,20 @@ export class HomeCalendarComponent implements OnInit {
 
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(month.getFullYear(), month.getMonth(), i);
-      const dateKey = date.toISOString().split('T')[0];
       const dayMatches: Jogo[] = [];
       days.push({ date, label: String(i), matches: dayMatches });
+    }
+
+    // associate matches to days (basic match-by-date if jogo has date)
+    const jogos = this.matches() || [];
+    for (const jogo of jogos) {
+      try {
+        const d = new Date((jogo as any).data || (jogo as any).date || '');
+        if (!isNaN(d.getTime())) {
+          const idx = d.getDate() + startOffset - 1;
+          if (days[idx] && days[idx].matches) days[idx].matches.push(jogo);
+        }
+      } catch {}
     }
 
     this.calendarDays.set(days);
@@ -279,30 +82,11 @@ export class HomeCalendarComponent implements OnInit {
     this.buildCalendar();
   }
 
-  addMatch() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    // Jogos são apenas para leitura do endpoint da Copa
-    alert('Jogos são gerenciados pelo backend da Copa.');
-  }
-
-  removeMatch(match: Jogo) {
-    // Jogos são apenas para leitura
-    alert('Jogos não podem ser removidos.');
-  }
-
-  get opponentOptions() {
-    return ['Sem filtro'];
-  }
-
   get monthName() {
     return this.currentMonth().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
   }
 
   getEstadio(jogo: Jogo): string {
-    return (jogo as any)['estádio'] || 'Estádio a confirmar';
+    return (jogo as any)['estádio'] || (jogo as any).estadio || 'Estádio a confirmar';
   }
 }

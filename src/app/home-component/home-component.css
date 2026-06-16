@@ -59,7 +59,4 @@
 .badge.bg-primary {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
 }
-  background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-  font-weight: 600;
-  padding: 0.5rem 0.9rem;
-}
+/* cleaned stray CSS */
