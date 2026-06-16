@@ -1,29 +1,29 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { provideHttpClient } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { App } from './app';
 import { AppRoutingModule } from './app-routing-module';
-import { AlbumComponent } from './pages/album-component/album';
-import { CalendarioComponent } from './pages/calendario-component/calendario';
-import { GruposComponent } from './pages/grupos-component/grupos';
-import { TelaInicial } from './pages/tela-inicial-component/tela-inicial';
-import { Footer } from './shared/footer/footer';
-import { Navbar } from './shared/navbar/navbar';
+import { App } from './app';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TeamComponent } from './product-component/product-component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './home-component/home-component';
+import { HomeCalendarComponent } from './home-calendar-component/home-calendar-component';
+import { FooterComponent } from './footer-component/footer-component';
+import { NavBarComponent } from './nav-bar-component/nav-bar-component';
+import { ClientComponent } from './client-component/client-component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     App,
-    Navbar,
-    Footer,
-    TelaInicial,
-    GruposComponent,
-    CalendarioComponent,
-    AlbumComponent,
+    TeamComponent,
+    HomeComponent,
+    HomeCalendarComponent,
+    FooterComponent,
+    NavBarComponent,
+    ClientComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, ReactiveFormsModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],
 })

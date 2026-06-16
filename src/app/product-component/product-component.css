@@ -1,0 +1,113 @@
+.display-4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.card {
+  background-color: #1e293b;
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.table-responsive {
+  background-color: #1e293b;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  border-bottom: 1px solid #334155;
+}
+
+.table thead th {
+  background-color: #0f172a;
+  border-bottom: 2px solid #334155;
+  font-weight: 700;
+  color: #cbd5e1;
+  padding: 1.25rem;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #0f172a;
+}
+
+.table td {
+  padding: 1.25rem;
+  color: #cbd5e1;
+  border-bottom: 1px solid #334155;
+}
+
+.calendar-panel {
+  border-left: 4px solid #06b6d4;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 0.75rem;
+}
+
+.match-day {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #06b6d4;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.match-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #334155;
+  transition: all 0.2s ease;
+  color: #cbd5e1;
+}
+
+.match-item:last-child {
+  border-bottom: none;
+}
+
+.match-item:hover {
+  color: #06b6d4;
+  padding-left: 0.5rem;
+}
+
+.stats-panel {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 0.75rem;
+  border-left: 4px solid #22d3ee;
+}
+
+.stats-panel h5 {
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.stats-panel .d-flex {
+  padding: 0.75rem 0;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.stats-panel strong {
+  color: #06b6d4;
+  font-weight: 700;
+}

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TelaInicial } from './pages/tela-inicial-component/tela-inicial';
+import { TeamComponent } from './product-component/product-component';
+import { ClientComponent } from './client-component/client-component';
+import { HomeComponent } from './home-component/home-component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tela-inicial', pathMatch: 'full' },
-  { path: 'tela-inicial', component: TelaInicial },
-  { path: '**', redirectTo: 'tela-inicial' },
+  { path: '', component: HomeComponent },
+  { path: 'times', component: TeamComponent },
+  { path: 'client', component: ClientComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,116 @@
+<div class="container mt-4">
+  <div class="display-4 text-center mb-4">Cadastro de Times</div>
+
+  <div class="row gx-4">
+    <div class="col-lg-7">
+      <form [formGroup]="formGroupTeam" class="card p-4 mb-4 shadow-sm">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="inputName" class="form-label">Nome do time</label>
+            <input formControlName="name" type="text" class="form-control" id="inputName" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputCountry" class="form-label">País</label>
+            <input formControlName="country" type="text" class="form-control" id="inputCountry" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputMatchDay" class="form-label">Próximo dia de jogo</label>
+            <input formControlName="matchDay" type="date" class="form-control" id="inputMatchDay" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputPoints" class="form-label">Pontuação na Copa</label>
+            <input
+              formControlName="cupPoints"
+              type="number"
+              min="0"
+              class="form-control"
+              id="inputPoints"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex flex-wrap gap-2">
+          <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="save()">
+            Salvar time
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-success" (click)="update()">
+            Atualizar time
+          </button>
+          <button
+            *ngIf="isEditing"
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="formGroupTeam.reset(); isEditing = false"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card calendar-panel shadow-sm mb-4 p-3">
+        <h5 class="mb-3">Próximos jogos</h5>
+        <div *ngIf="teams().length === 0" class="text-muted">Nenhum time cadastrado ainda.</div>
+        <ng-container *ngIf="teams().length > 0">
+          <div *ngFor="let item of upcomingMatches" class="mb-3">
+            <div class="match-day">{{ item.matchDay | date: 'dd/MM/yyyy' }}</div>
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let team of item.teams" class="match-item">
+                <strong>{{ team.name }}</strong> - {{ team.country }}
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="card stats-panel shadow-sm p-3">
+        <h5 class="mb-3">Resumo rápido</h5>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Times cadastrados</span>
+          <strong>{{ teams().length }}</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Maior pontuação</span>
+          <strong>{{ highestPoints() }}</strong>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Próximo jogo</span>
+          <strong>{{ nextMatch() || '—' }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3"><strong>Total de times:</strong> {{ teams().length }}</div>
+
+  <div class="table-responsive mb-5">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Time</th>
+          <th scope="col">País</th>
+          <th scope="col">Jogo</th>
+          <th scope="col">Pontos</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of teams()">
+          <th scope="row">{{ team.id }}</th>
+          <td>{{ team.name }}</td>
+          <td>{{ team.country }}</td>
+          <td>{{ team.matchDay | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ team.cupPoints }}</td>
+          <td>
+            <button class="btn btn-sm btn-secondary me-2" (click)="onClickUpdate(team)">
+              Editar
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="delete(team)">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

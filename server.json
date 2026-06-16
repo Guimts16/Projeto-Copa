@@ -1,0 +1,55 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Fatec Stars",
+      "country": "Brasil",
+      "matchDay": "2026-07-08",
+      "cupPoints": 3
+    },
+    {
+      "id": 2,
+      "name": "Campus Falcons",
+      "country": "Argentina",
+      "matchDay": "2026-07-10",
+      "cupPoints": 4
+    },
+    {
+      "id": 3,
+      "name": "Tech Lions",
+      "country": "Portugal",
+      "matchDay": "2026-07-12",
+      "cupPoints": 1
+    },
+    {
+      "id": 4,
+      "name": "asdas",
+      "country": "asdas",
+      "matchDay": "2026-06-03",
+      "cupPoints": 2
+    }
+  ],
+  "matches": [
+    {
+      "id": 1,
+      "date": "2026-07-08",
+      "opponent": "Academia FC",
+      "venue": "Estádio Municipal",
+      "country": "Brasil"
+    },
+    {
+      "id": 2,
+      "date": "2026-07-10",
+      "opponent": "Campus Eagles",
+      "venue": "Arena Itaim",
+      "country": "Argentina"
+    },
+    {
+      "id": 3,
+      "date": "2026-07-12",
+      "opponent": "University United",
+      "venue": "Campo Verde",
+      "country": "Portugal"
+    }
+  ]
+}

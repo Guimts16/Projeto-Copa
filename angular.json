@@ -3,11 +3,11 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": false
+    "analytics": "f6077579-4545-4e8f-b2c9-cd092ae85790"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ProjetoCopa": {
+    "cadprod": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -35,9 +35,13 @@
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
-            "polyfills": ["@angular/localize/init"]
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
+            "polyfills": [
+              "@angular/localize/init"
+            ]
           },
           "configurations": {
             "production": {
@@ -67,10 +71,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ProjetoCopa:build:production"
+              "buildTarget": "cadprod:build:production"
             },
             "development": {
-              "buildTarget": "ProjetoCopa:build:development"
+              "buildTarget": "cadprod:build:development"
             }
           },
           "defaultConfiguration": "development"

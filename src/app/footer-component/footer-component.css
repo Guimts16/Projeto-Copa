@@ -1,0 +1,19 @@
+.footer {
+  background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+  border-top: 1px solid #334155;
+  padding: 2rem 0;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.footer-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f1f5f9;
+}
+
+.text-muted-footer {
+  color: #94a3b8 !important;
+  font-weight: 500;
+}
