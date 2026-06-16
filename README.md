@@ -41,7 +41,7 @@ Abra seu navegador em `http://localhost:4200/`. A aplicação recarrega automati
 
 **IMPORTANTE**: Este projeto está preparado para funcionar com um backend Java.
 
-Consulte o guia completo em [BACKEND_SETUP.md](./BACKEND_SETUP.md) para:
+Consulte o guia completo em [BACKEND_SETUP.md] para:
 
 - Endpoints esperados
 - Modelos de dados
